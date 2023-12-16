@@ -1,0 +1,35 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  border: 5px solid black;
+  padding: 80px 40px;
+}
+.wrapperInp {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+.inp {
+  border: 1px solid black;
+  padding: 5px 20px;
+  border-radius: 10px;
+}
+.button {
+  width: 100%;
+  cursor: pointer;
+  padding: 5px 20px;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 209, 255, 0.81);
+  text-transform: uppercase;
+}
