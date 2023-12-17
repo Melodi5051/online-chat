@@ -1,12 +1,13 @@
 import { makeAutoObservable } from "mobx";
-import { useWebSocket } from "../components/WebScoketContext";
 import { user, message } from "../types/main";
 
 class User {
   userName: string = "";
   userAuth: boolean = false;
   userList: user[] = [];
+  countUsers: number = 0;
   messagesList: message[] = [];
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -26,7 +27,9 @@ class User {
   setUserList(list: user[]) {
     this.userList = list;
   }
-
+  setCountUsers(count: number) {
+    this.countUsers = count;
+  }
   setMessageInList(message: message) {
     this.messagesList.push(message);
   }

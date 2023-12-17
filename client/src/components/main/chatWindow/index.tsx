@@ -1,6 +1,6 @@
 import React from "react";
 import { userStore } from "../../../store/user";
-import style from "./style.module.css";
+import style from "./style.module.scss";
 import { observer } from "mobx-react-lite";
 import Message from "./message";
 import { message } from "../../../types/main";

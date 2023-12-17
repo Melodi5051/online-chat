@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./style.module.css";
+import style from "./style.module.scss";
 import { user } from "../../../types/main";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const UserItem: React.FC<Props> = ({ item }) => {
-  return <li className={style.listItem}>{item}</li>;
+  return <li className={style.item}>{item}</li>;
 };
 
 export default UserItem;

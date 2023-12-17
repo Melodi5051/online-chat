@@ -1,0 +1,48 @@
+.messageSend,
+.messageSystem,
+.messageGet {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  .userName {
+    color: #000;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .messageWrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 3px 10px;
+    .textMessage {
+      font-size: 16px;
+      color: #000;
+      font-weight: 400;
+    }
+    .time {
+      font-size: 10px;
+      color: #000;
+      font-weight: 400;
+    }
+  }
+}
+.messageSend {
+  align-items: flex-end;
+  .messageWrapper {
+    background: rgba(0, 209, 255, 0.3);
+  }
+}
+.messageGet {
+  align-items: flex-start;
+  .messageWrapper {
+    background: rgba(255, 0, 0, 0.3);
+  }
+}
+.messageSystem {
+  align-items: center;
+  .messageWrapper {
+    background: rgba(116, 116, 116, 0.3);
+  }
+}

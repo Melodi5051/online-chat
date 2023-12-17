@@ -1,9 +1,7 @@
-import express, { Request, Response } from "express";
 import http from "http";
 import { Server as SocketIOServer, Socket } from "socket.io";
 
-const app = express();
-const server = http.createServer(app);
+const server = http.createServer();
 const io = new SocketIOServer(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -14,24 +12,54 @@ const io = new SocketIOServer(server, {
 const PORT = process.env.PORT || 5000;
 
 let userList: string[] = [];
+let countUsers: number = userList.length;
 
 io.on("connection", (socket: Socket) => {
+  socket.emit("countUsers", countUsers);
+
   socket.on("login", (userName: string) => {
     if (userList.includes(userName)) {
       socket.emit("loginError", "User already exists");
     } else {
       userList.push(userName);
+      countUsers = userList.length;
       io.emit("userList", userList);
+
+      const currentTime = new Date();
+      const formattedTime = `${currentTime.getHours()}:${String(
+        currentTime.getMinutes()
+      ).padStart(2, "0")}`;
+
+      const data = {
+        name: "Система",
+        message: `Пользователь "${userName}" вошел в чат`,
+        dateTime: formattedTime,
+      };
+
+      io.emit("message", data);
     }
   });
 
   socket.on("logout", (userName: string) => {
     userList = userList.filter((name: string) => name !== userName);
+    countUsers = userList.length;
     console.log(userList);
-    io.emit("userList", userList);
+
+    const currentTime = new Date();
+    const formattedTime = `${currentTime.getHours()}:${String(
+      currentTime.getMinutes()
+    ).padStart(2, "0")}`;
+
+    const data = {
+      name: "Система",
+      message: `Пользователь "${userName}" вышел из чата`,
+      dateTime: formattedTime,
+    };
+
+    io.emit("message", data);
   });
 
-  socket.on("getUsers", (callback: any) => {
+  socket.on("getUsers", (callback: (item: string[]) => void) => {
     callback(userList);
   });
 
@@ -42,5 +70,5 @@ io.on("connection", (socket: Socket) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Сервер на порте ${PORT}`);
+  console.log(`Сервер запущен на порте ${PORT}`);
 });

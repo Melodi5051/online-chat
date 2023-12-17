@@ -1,5 +1,4 @@
-import React from "react";
-import style from "./style.module.css";
+import style from "./style.module.scss";
 import { userStore } from "../../store/user";
 import { useWebSocket } from "../WebScoketContext";
 import { useNavigate } from "react-router-dom";

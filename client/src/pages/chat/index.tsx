@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import style from "./style.module.css";
+import style from "./style.module.scss";
 import { userStore } from "../../store/user";
-import { useNavigate } from "react-router-dom";
-import { observer } from "mobx-react-lite";
 import { useWebSocket } from "../../components/WebScoketContext";
 
 import Sidebar from "../../components/sidebar";
