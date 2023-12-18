@@ -4,17 +4,16 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useWebSocket } from "./components/WebScoketContext";
 import { userStore } from "./store/user";
+import { user } from "./types/main";
 
 function App() {
   const { socket } = useWebSocket();
   useEffect(() => {
     if (socket) {
       socket.on("countUsers", (res: number) => {
-        if (res) {
-          userStore.setCountUsers(res);
-        }
+        userStore.setCountUsers(res);
       });
-      socket.on("userList", (res) => {
+      socket.on("userList", (res: user[]) => {
         if (res) {
           userStore.setUserList(res);
         }

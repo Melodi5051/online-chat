@@ -13,6 +13,7 @@ const UserList = () => {
     if (socket) {
       socket.emit("logout", userName);
       userStore.Logout();
+      localStorage.removeItem("userName");
       navigate("/");
     }
   };

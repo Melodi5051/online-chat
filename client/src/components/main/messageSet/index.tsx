@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "./style.module.css";
+import style from "./style.module.scss";
 import { useWebSocket } from "../../WebScoketContext";
 import { userStore } from "../../../store/user";
 import send from "./../../../assets/send-icon.svg";

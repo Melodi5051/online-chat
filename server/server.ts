@@ -16,34 +16,40 @@ let countUsers: number = userList.length;
 
 io.on("connection", (socket: Socket) => {
   socket.emit("countUsers", countUsers);
+  socket.emit("userList", userList);
+
+  socket.on(
+    "checkUserName",
+    (userName: string, callback: (exists: boolean) => void) => {
+      const userExists = userList.includes(userName);
+      callback(userExists);
+    }
+  );
 
   socket.on("login", (userName: string) => {
-    if (userList.includes(userName)) {
-      socket.emit("loginError", "User already exists");
-    } else {
-      userList.push(userName);
-      countUsers = userList.length;
-      io.emit("userList", userList);
+    userList.push(userName);
+    countUsers = userList.length;
 
-      const currentTime = new Date();
-      const formattedTime = `${currentTime.getHours()}:${String(
-        currentTime.getMinutes()
-      ).padStart(2, "0")}`;
+    const currentTime = new Date();
+    const formattedTime = `${currentTime.getHours()}:${String(
+      currentTime.getMinutes()
+    ).padStart(2, "0")}`;
 
-      const data = {
-        name: "Система",
-        message: `Пользователь "${userName}" вошел в чат`,
-        dateTime: formattedTime,
-      };
+    const data = {
+      name: "Система",
+      message: `Пользователь "${userName}" вошел в чат`,
+      dateTime: formattedTime,
+    };
 
-      io.emit("message", data);
-    }
+    io.emit("userList", userList);
+    io.emit("countUsers", countUsers);
+    io.emit("message", data);
   });
 
   socket.on("logout", (userName: string) => {
     userList = userList.filter((name: string) => name !== userName);
     countUsers = userList.length;
-    console.log(userList);
+    console.log(countUsers);
 
     const currentTime = new Date();
     const formattedTime = `${currentTime.getHours()}:${String(
@@ -56,7 +62,9 @@ io.on("connection", (socket: Socket) => {
       dateTime: formattedTime,
     };
 
+    io.emit("countUsers", countUsers);
     io.emit("message", data);
+    io.emit("userList", userList);
   });
 
   socket.on("getUsers", (callback: (item: string[]) => void) => {

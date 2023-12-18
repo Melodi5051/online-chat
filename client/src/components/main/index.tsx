@@ -1,4 +1,4 @@
-import style from "./style.module.css";
+import style from "./style.module.scss";
 import MessageSet from "./messageSet";
 import ChatWindow from "./chatWindow";
 
