@@ -3,4 +3,3 @@ export interface message {
   message: string;
   dateTime: Date;
 }
-export type user = string;

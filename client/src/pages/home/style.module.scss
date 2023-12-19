@@ -99,6 +99,9 @@
     top: 20px;
     z-index: -10;
 
+    animation-duration: 1.5s;
+    animation-name: rightImage;
+
     width: 1125.595px;
     height: 1125.595px;
   }
@@ -107,6 +110,9 @@
     left: -100px;
     top: 350px;
     z-index: -10;
+
+    animation-duration: 1.5s;
+    animation-name: leftImage;
 
     width: 677px;
     height: 689px;
@@ -245,6 +251,25 @@
   }
   to {
     top: -60px;
+    opacity: 1;
+  }
+}
+
+@keyframes leftImage {
+  from {
+    opacity: 0;
+    left: -1000px;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes rightImage {
+  from {
+    opacity: 0;
+    right: -1000px;
+  }
+  to {
     opacity: 1;
   }
 }

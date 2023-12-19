@@ -1,5 +1,6 @@
 import http from "http";
 import { Server as SocketIOServer, Socket } from "socket.io";
+import { message } from "./types/types";
 
 const server = http.createServer();
 const io = new SocketIOServer(server, {
@@ -13,6 +14,14 @@ const PORT = process.env.PORT || 5000;
 
 let userList: string[] = [];
 let countUsers: number = userList.length;
+
+const messageSystem = (message: string): message => {
+  return {
+    name: "Система",
+    message,
+    dateTime: new Date(),
+  };
+};
 
 io.on("connection", (socket: Socket) => {
   socket.emit("countUsers", countUsers);
@@ -29,41 +38,20 @@ io.on("connection", (socket: Socket) => {
   socket.on("login", (userName: string) => {
     userList.push(userName);
     countUsers = userList.length;
+    const message = `Пользователь "${userName}" вошел в чат`;
 
-    const currentTime = new Date();
-    const formattedTime = `${currentTime.getHours()}:${String(
-      currentTime.getMinutes()
-    ).padStart(2, "0")}`;
-
-    const data = {
-      name: "Система",
-      message: `Пользователь "${userName}" вошел в чат`,
-      dateTime: formattedTime,
-    };
-
-    io.emit("userList", userList);
     io.emit("countUsers", countUsers);
-    io.emit("message", data);
+    io.emit("message", messageSystem(message));
+    io.emit("userList", userList);
   });
 
   socket.on("logout", (userName: string) => {
     userList = userList.filter((name: string) => name !== userName);
     countUsers = userList.length;
-    console.log(countUsers);
-
-    const currentTime = new Date();
-    const formattedTime = `${currentTime.getHours()}:${String(
-      currentTime.getMinutes()
-    ).padStart(2, "0")}`;
-
-    const data = {
-      name: "Система",
-      message: `Пользователь "${userName}" вышел из чата`,
-      dateTime: formattedTime,
-    };
+    const message = `Пользователь "${userName}" вышел из чата`;
 
     io.emit("countUsers", countUsers);
-    io.emit("message", data);
+    io.emit("message", messageSystem(message));
     io.emit("userList", userList);
   });
 
@@ -72,7 +60,6 @@ io.on("connection", (socket: Socket) => {
   });
 
   socket.on("message", (data) => {
-    console.log(data.name, "говорит:", data.message, "время", data.dateTime);
     io.emit("message", data);
   });
 });

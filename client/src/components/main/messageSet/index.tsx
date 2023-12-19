@@ -9,16 +9,12 @@ const MessageSet = () => {
   const [message, setMessage] = useState("");
   const handleMessageSend = () => {
     if (socket && message) {
-      const currentTime = new Date();
-      const formattedTime = `${currentTime.getHours()}:${String(
-        currentTime.getMinutes()
-      ).padStart(2, "0")}`;
-      const dataUser = {
+      const dataMessage = {
         name: userStore.getUserName(),
         message: message,
-        dateTime: formattedTime,
+        dateTime: new Date(),
       };
-      socket.emit("message", dataUser);
+      socket.emit("message", dataMessage);
       setMessage("");
     }
   };
