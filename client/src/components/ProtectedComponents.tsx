@@ -6,15 +6,19 @@ import { useNavigate } from "react-router-dom";
 type Props = { children: React.ReactNode };
 
 const ProtectedComponents = ({ children }: Props) => {
+  console.log(children);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!userStore.userAuth) {
       navigate("/");
     }
   }, [navigate]);
+
   if (!userStore.userAuth) {
     return null;
   }
+
   return <>{children}</>;
 };
 

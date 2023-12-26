@@ -8,6 +8,7 @@ import { user } from "../../types/main";
 const UserList = () => {
   const navigate = useNavigate();
   const { socket } = useWebSocket();
+
   const handleLogout = () => {
     const userName = userStore.getUserName();
     if (socket) {
@@ -17,6 +18,7 @@ const UserList = () => {
       navigate("/");
     }
   };
+
   return (
     <div className={style.sidebar}>
       <h1 className={style.title}>Онлайн чат</h1>

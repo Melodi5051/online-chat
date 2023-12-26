@@ -18,6 +18,7 @@ const Message: React.FC<Props> = ({ el }) => {
       : el.name === "Система"
       ? style.messageSystem
       : style.messageGet;
+
   return (
     <div className={classMessage}>
       <h3 className={style.userName}>{el.name}</h3>
