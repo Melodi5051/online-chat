@@ -46,13 +46,16 @@ io.on("connection", (socket: Socket) => {
   });
 
   socket.on("logout", (userName: string) => {
-    userList = userList.filter((name: string) => name !== userName);
-    countUsers = userList.length;
-    const message = `Пользователь "${userName}" вышел из чата`;
-
-    io.emit("countUsers", countUsers);
-    io.emit("message", messageSystem(message));
-    io.emit("userList", userList);
+    
+    if (userList.includes(userName)) {
+      const message = `Пользователь "${userName}" вышел из чата`;
+      userList = userList.filter((name: string) => name !== userName);
+      countUsers = userList.length;
+      io.emit("countUsers", countUsers);
+      io.emit("message", messageSystem(message));
+      io.emit("userList", userList);
+    }
+  
   });
 
   socket.on("getUsers", (callback: (item: string[]) => void) => {

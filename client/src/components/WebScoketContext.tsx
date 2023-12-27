@@ -23,12 +23,13 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const socket = io("http://localhost:5000");
 
-  window.addEventListener("pagehide", (event) => {
+  window.addEventListener("pagehide", () => {
     const userName = userStore.getUserName();
     socket.emit("logout", userName);
     userStore.Logout();
     localStorage.removeItem("userName");
   });
+  
 
   return (
     <WebSocketContext.Provider value={{ socket }}>
